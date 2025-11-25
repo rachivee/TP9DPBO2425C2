@@ -1,7 +1,8 @@
 <?php
 include_once("models/HasilBalapan.php");
+include_once("KontrakPresenterHasil.php"); // Load interface
 
-class PresenterHasil {
+class PresenterHasil implements KontrakPresenterHasil{
     private $tabelHasil;
     private $tabelPembalap;
     private $view;

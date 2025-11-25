@@ -1,6 +1,7 @@
 <?php
+include_once("KontrakViewHasil.php");
 
-class ViewHasil {
+class ViewHasil implements KontrakViewHasil {
 
     public function tampilkanList($listHasil) {
         $template = file_get_contents(__DIR__ . '/../template/skin.html');
