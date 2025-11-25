@@ -7,12 +7,9 @@ include_once(__DIR__ . "/../views/ViewPembalap.php");
 
 class PresenterPembalap implements KontrakPresenter
 {
-    // Model PembalapQuery untuk operasi database
-    private $tabelPembalap; // Instance dari TabelPembalap (Model)
-    private $viewPembalap; // Instance dari ViewPembalap (View)
-
-    // Data list pembalap
-    private $listPembalap = []; // Menyimpan array objek Pembalap
+    private $tabelPembalap;
+    private $viewPembalap;
+    private $listPembalap = [];
 
     public function __construct($tabelPembalap, $viewPembalap)
     {
@@ -21,55 +18,45 @@ class PresenterPembalap implements KontrakPresenter
         $this->initListPembalap();
     }
 
-    // Method untuk initialisasi list pembalap dari database
     public function initListPembalap()
     {
-        // Dapatkan data pembalap dari database
         $data = $this->tabelPembalap->getAllPembalap();
-
-        // Buat objek Pembalap dan simpan di listPembalap
         $this->listPembalap = [];
-            foreach ($data as $item) {
-            $pembalap = new Pembalap(
-                $item['id'],
-                $item['nama'],
-                $item['tim'],
-                $item['negara'],
-                $item['poinMusim'],
-                $item['jumlahMenang']
+        foreach ($data as $item) {
+            $this->listPembalap[] = new Pembalap(
+                $item['id'], $item['nama'], $item['tim'], 
+                $item['negara'], $item['poinMusim'], $item['jumlahMenang']
             );
-            $this->listPembalap[] = $pembalap;
         }
     }
 
-    // Method untuk menampilkan daftar pembalap menggunakan View
     public function tampilkanPembalap(): string
     {
         return $this->viewPembalap->tampilPembalap($this->listPembalap);
     }
 
-    // Method untuk menampilkan form
     public function tampilkanFormPembalap($id = null): string
     {
         $data = null;
         if ($id !== null) {
-            $data = $this->tabelPembalap->getPembalapById($id);
+            // Presenter memanggil Model untuk mengambil data pembalap berdasarkan ID
+            $data = $this->tabelPembalap->getPembalapById($id); 
         }
-        return $this->viewPembalap->tampilkanFormPembalap($data);
+        // Data dikirim ke View untuk di-render ke form
+        return $this->viewPembalap->tampilFormPembalap($data);
     }
 
-    // implementasikan metode
-
+    // Implementasi metode CRUD
     public function tambahPembalap($nama, $tim, $negara, $poinMusim, $jumlahMenang): void {
-        // isi ga ya
+        $this->tabelPembalap->addPembalap($nama, $tim, $negara, $poinMusim, $jumlahMenang);
     }
-    
+
     public function ubahPembalap($id, $nama, $tim, $negara, $poinMusim, $jumlahMenang): void {
-        // isi ga ya
+        $this->tabelPembalap->updatePembalap($id, $nama, $tim, $negara, $poinMusim, $jumlahMenang);
     }
-    
+
     public function hapusPembalap($id): void {
-        // isi ga ya
+        $this->tabelPembalap->deletePembalap($id);
     }
 }
 

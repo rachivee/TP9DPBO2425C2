@@ -5,39 +5,58 @@ include_once ("KontrakModel.php");
 
 class TabelPembalap extends DB implements KontrakModel {
 
-    // Konstruktor untuk inisialisasi database
     public function __construct($host, $db_name, $username, $password) {
         parent::__construct($host, $db_name, $username, $password);
     }
 
-    // Method untuk mendapatkan semua pembalap
     public function getAllPembalap(): array {
         $query = "SELECT * FROM pembalap";
         $this->executeQuery($query);
         return $this->getAllResult();
     }
 
-    // Method untuk mendapatkan pembalap berdasarkan ID
     public function getPembalapById($id): ?array {
         $this->executeQuery("SELECT * FROM pembalap WHERE id = :id", ['id' => $id]);
         $results = $this->getAllResult();
         return $results[0] ?? null;
     }
 
-    // implementasikan metode CRUD di bawah ini sesuai kebutuhan
-
+    // Implementasi method Create
     public function addPembalap($nama, $tim, $negara, $poinMusim, $jumlahMenang): void {
-        // ini isi ga ya mas 
-    }
-    
-    public function updatePembalap($id, $nama, $tim, $negara, $poinMusim, $jumlahMenang): void {
-        // hayo isi ga
-    }
-    
-    public function deletePembalap($id): void {
-        // isi ga ya 
+        $query = "INSERT INTO pembalap (nama, tim, negara, poinMusim, jumlahMenang) 
+                  VALUES (:nama, :tim, :negara, :poin, :menang)";
+        $params = [
+            ':nama' => $nama,
+            ':tim' => $tim,
+            ':negara' => $negara,
+            ':poin' => $poinMusim,
+            ':menang' => $jumlahMenang
+        ];
+        $this->executeQuery($query, $params);
     }
 
+    // Implementasi method Update
+    public function updatePembalap($id, $nama, $tim, $negara, $poinMusim, $jumlahMenang): void {
+        $query = "UPDATE pembalap 
+                  SET nama = :nama, tim = :tim, negara = :negara, poinMusim = :poin, jumlahMenang = :menang 
+                  WHERE id = :id";
+        $params = [
+            ':id' => $id,
+            ':nama' => $nama,
+            ':tim' => $tim,
+            ':negara' => $negara,
+            ':poin' => $poinMusim,
+            ':menang' => $jumlahMenang
+        ];
+        $this->executeQuery($query, $params);
+    }
+
+    // Implementasi method Delete
+    public function deletePembalap($id): void {
+        $query = "DELETE FROM pembalap WHERE id = :id";
+        $params = [':id' => $id];
+        $this->executeQuery($query, $params);
+    }
 }
 
 ?>

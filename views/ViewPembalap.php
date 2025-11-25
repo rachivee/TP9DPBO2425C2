@@ -48,14 +48,51 @@ class ViewPembalap implements KontrakView{
     // Method untuk menampilkan form tambah/ubah pembalap
     public function tampilFormPembalap($data = null): string {
         $template = file_get_contents(__DIR__ . '/../template/form.html');
+        
         if ($data) {
-            $template = str_replace('value="add" id="pembalap-action"', 'value="edit" id="pembalap-action"', $template);
-            $template = str_replace('value="" id="pembalap-id"', 'value="' . htmlspecialchars($data['id']) . '" id="pembalap-id"', $template);
-            $template = str_replace('id="nama" name="nama" type="text" placeholder="Nama pembalap"', 'id="nama" name="nama" type="text" placeholder="Nama pembalap" value="' . htmlspecialchars($data['nama']) . '"', $template);
-            $template = str_replace('id="tim" name="tim" type="text" placeholder="Nama tim"', 'id="tim" name="tim" type="text" placeholder="Nama tim" value="' . htmlspecialchars($data['tim']) . '"', $template);
-            $template = str_replace('id="negara" name="negara" type="text" placeholder="Negara (mis. Indonesia)"', 'id="negara" name="negara" type="text" placeholder="Negara (mis. Indonesia)" value="' . htmlspecialchars($data['negara']) . '"', $template);
-            $template = str_replace('id="poinMusim" name="poinMusim" type="number" min="0" step="1" placeholder="0"', 'id="poinMusim" name="poinMusim" type="number" min="0" step="1" placeholder="0" value="' . htmlspecialchars($data['poinMusim']) . '"', $template);
-            $template = str_replace('id="jumlahMenang" name="jumlahMenang" type="number" min="0" step="1" placeholder="0"', 'id="jumlahMenang" name="jumlahMenang" type="number" min="0" step="1" placeholder="0" value="' . htmlspecialchars($data['jumlahMenang']) . '"', $template);
+            // 1. Ganti aksi dari 'add' menjadi 'edit' dan isi ID Pembalap
+            $template = str_replace(
+                'value="add" id="pembalap-action" data-field', // String target di form.html
+                'value="edit" id="pembalap-action" data-field', // String pengganti (action: edit)
+                $template
+            );
+            
+            $template = str_replace(
+                'value="" id="pembalap-id" data-field', // String target di form.html
+                'value="' . htmlspecialchars($data['id']) . '" id="pembalap-id" data-field', // String pengganti (isi ID)
+                $template
+            );
+            
+            // 2. Isi nilai-nilai form lainnya. Pastikan string pencarian (search) cocok 100% dengan form.html.
+            $template = str_replace(
+                'id="nama" name="nama" type="text" placeholder="Nama pembalap" required data-field', 
+                'id="nama" name="nama" type="text" placeholder="Nama pembalap" required data-field value="' . htmlspecialchars($data['nama']) . '"', 
+                $template
+            );
+            
+            $template = str_replace(
+                'id="tim" name="tim" type="text" placeholder="Nama tim" required data-field', 
+                'id="tim" name="tim" type="text" placeholder="Nama tim" required data-field value="' . htmlspecialchars($data['tim']) . '"', 
+                $template
+            );
+            
+            $template = str_replace(
+                'id="negara" name="negara" type="text" placeholder="Negara (mis. Indonesia)" data-field', 
+                'id="negara" name="negara" type="text" placeholder="Negara (mis. Indonesia)" data-field value="' . htmlspecialchars($data['negara']) . '"', 
+                $template
+            );
+            
+            $template = str_replace(
+                'id="poinMusim" name="poinMusim" type="number" min="0" step="1" placeholder="0" data-field', 
+                'id="poinMusim" name="poinMusim" type="number" min="0" step="1" placeholder="0" data-field value="' . htmlspecialchars($data['poinMusim']) . '"', 
+                $template
+            );
+            
+            $template = str_replace(
+                'id="jumlahMenang" name="jumlahMenang" type="number" min="0" step="1" placeholder="0" data-field', 
+                'id="jumlahMenang" name="jumlahMenang" type="number" min="0" step="1" placeholder="0" data-field value="' . htmlspecialchars($data['jumlahMenang']) . '"', 
+                $template
+            );
         }
         return $template;
     }
