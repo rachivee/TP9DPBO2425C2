@@ -35,22 +35,22 @@ Semua interaksi pengguna diproses melalui satu pintu utama yaitu index.php.
 1. Menampilkan Data (Request GET)
 Contoh: Pengguna ingin melihat Daftar Hasil Balapan.
 
-User membuka URL index.php?screen=hasil.
-Index.php mengecek parameter screen.
-Index.php memanggil method tampilkanList() pada PresenterHasil.
-PresenterHasil meminta data dari TabelHasilBalapan (Model).
-Model me-return array data dari database.
-PresenterHasil melempar data tersebut ke ViewHasil.
-ViewHasil merender HTML dan mengirimkannya ke browser User.
+-> User membuka URL index.php?screen=hasil.
+-> Index.php mengecek parameter screen.
+-> Index.php memanggil method tampilkanList() pada PresenterHasil.
+-> PresenterHasil meminta data dari TabelHasilBalapan (Model).
+-> Model me-return array data dari database.
+-> PresenterHasil melempar data tersebut ke ViewHasil.
+-> ViewHasil merender HTML dan mengirimkannya ke browser User.
 
 2. Menambah Data (Request POST)
 Contoh: Pengguna mengisi Form Tambah Hasil Balapan dan klik "Simpan".
 
-Form mengirim data via POST dengan name="action" value="add_hasil".
-Index.php mendeteksi adanya $_POST['action'].
-Index.php memanggil method simpanHasil() pada PresenterHasil.
-PresenterHasil memvalidasi dan mengirim data ke TabelHasilBalapan (Model).
-Model menjalankan query INSERT ke database.
-Index.php melakukan redirect kembali ke halaman daftar.
+-> Form mengirim data via POST dengan name="action" value="add_hasil".
+-> Index.php mendeteksi adanya $_POST['action'].
+-> Index.php memanggil method simpanHasil() pada PresenterHasil.
+-> PresenterHasil memvalidasi dan mengirim data ke TabelHasilBalapan (Model).
+-> Model menjalankan query INSERT ke database.
+-> Index.php melakukan redirect kembali ke halaman daftar.
 
 # Dokumentasi
