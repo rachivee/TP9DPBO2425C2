@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form Hasil Balapan</title>
+  <style>
+    :root{
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --danger: #ef4444;
+      --border: #e6e9ef;
+      --radius: 8px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);}
+    .container{max-width:700px;margin:36px auto;padding:18px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+    h1{margin:0 0 8px;font-size:18px}
+    
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="number"], input[type="date"], select{width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;font-size:14px;box-sizing:border-box}
+
+    .full{grid-column:1/-1}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;font-size:14px;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-muted{background:transparent;border:1px solid var(--border);color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Catat Hasil Balapan</h1>
+
+      <form method="post" action="index.php">
+        <input type="hidden" name="action" value="add_hasil">
+
+        <div>
+          <label>Nama Grand Prix</label>
+          <input name="nama_event" type="text" placeholder="Contoh: GP Monaco" required>
+        </div>
+
+        <div>
+          <label>Tanggal Balapan</label>
+          <input name="tanggal" type="date" required>
+        </div>
+
+        <div class="full">
+            <label>Pilih Pembalap</label>
+            <select name="id_pembalap" required>
+                <option value="">-- Pilih Pembalap --</option>
+                DATA_PEMBALAP
+            </select>
+        </div>
+
+        <div>
+          <label>Posisi Finish</label>
+          <input name="posisi" type="number" min="1" placeholder="1">
+        </div>
+
+        <div>
+          <label>Poin Didapat</label>
+          <input name="poin" type="number" min="0" placeholder="25">
+        </div>
+
+        <div class="full actions">
+          <a href="index.php?screen=hasil" class="btn btn-muted">Batal</a>
+          <button type="submit" class="btn btn-primary">Simpan Hasil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
